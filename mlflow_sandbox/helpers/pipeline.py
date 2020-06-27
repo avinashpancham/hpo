@@ -1,3 +1,5 @@
+from collections import ChainMap
+from itertools import product
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -16,7 +18,7 @@ class Anonymizer(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X, **transform_params):
-        def _anonymize(doc: str):
+        def _anonymize(doc: spacy.tokens.doc.Doc) -> str:
             text = doc.text
             for ent in doc.ents:
                 text = text.replace(ent.text, ent.label_)
@@ -28,6 +30,10 @@ class Anonymizer(BaseEstimator, TransformerMixin):
                 for doc in self._nlp_model.pipe(X, disable=["tagger", "parser"])
             ]
         )
+
+
+def combine_spaces(spaces: List[List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
+    return [dict(ChainMap(*combination)) for combination in product(*spaces)]
 
 
 def explore_search_space(

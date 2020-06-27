@@ -2,7 +2,7 @@ import argparse
 from typing import Tuple
 
 
-def get_cli_options() -> Tuple[int, int, bool]:
+def get_cli_options_multiple() -> Tuple[int, int, bool]:
     parser = argparse.ArgumentParser(description="Provide input for training models")
     parser.add_argument(
         "--size", "-n", type=int, default=1000, help="Provide sample size"
@@ -20,3 +20,12 @@ def get_cli_options() -> Tuple[int, int, bool]:
 
     args = parser.parse_args()
     return args.size, args.workers, args.random
+
+
+def get_cli_options_single() -> Tuple[int, int, bool]:
+    parser = argparse.ArgumentParser(description="Provide input for training models")
+    parser.add_argument(
+        "--name", "-n", type=str, default=None, help="Provide MLflow experiment name"
+    )
+    args = parser.parse_args()
+    return args.name
