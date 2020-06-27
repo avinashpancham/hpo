@@ -13,8 +13,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 
 
-from helpers.cli_options import get_cli_options
-from helpers.mlflow_helpers import get_experiment, combine_spaces
+from helpers.cli_options import get_cli_options_multiple
+from helpers.mlflow_helpers import create_experiment, combine_spaces
 from helpers.pipeline import Anonymizer, explore_search_space
 from helpers.preprocessing import load_data
 
@@ -110,7 +110,7 @@ def train_model(
             mlflow.log_metrics({"accuracy": acc, "precision": precision, "f1": f1})
 
             if rank == 1:
-                mlflow.set_tag("saved_model", True)
+                mlflow.set_tag("best_model", True)
                 mlflow.sklearn.log_model(optimizer.best_estimator_, "model")
                 mlflow.log_artifact(
                     base_folder / "train.csv", "train.csv",
@@ -118,12 +118,17 @@ def train_model(
 
 
 if __name__ == "__main__":
-    sample_size, workers, random_optimizer = get_cli_options()
+    sample_size, workers, random_optimizer = get_cli_options_multiple()
 
-    experiment = get_experiment(base_name="Sentiment")
+    experiment = create_experiment(base_name="Sentiment")
     train_model(
         sample_size=sample_size,
         workers=workers,
         random_optimizer=random_optimizer,
         experiment=experiment,
+    )
+
+    logger.info(
+        "Results are stored in experiment %s. Run 'python train_best_model.py'",
+        experiment,
     )
