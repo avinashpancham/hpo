@@ -16,7 +16,7 @@ h = html2text.HTML2Text()
 h.ignore_links = True
 h.ignore_emphasis = True
 
-# Folders with tar.gz file from http://ai.stanford.edu/~amaas/data/sentiment/
+# Folder with tar.gz file from http://ai.stanford.edu/~amaas/data/sentiment/
 data_folder = Path(r"../data")
 
 file_name_regex = re.compile(r"aclImdb/(train|test)/(pos|neg)/\d+_([1-9]|10).txt")
