@@ -5,7 +5,7 @@ from typing import Tuple
 def get_cli_options() -> Tuple[int, int, bool]:
     parser = argparse.ArgumentParser(description="Provide input for training models")
     parser.add_argument(
-        "--size", "-n", type=int, default=100, help="Provide sample size"
+        "--size", "-n", type=int, default=1000, help="Provide sample size"
     )
     parser.add_argument(
         "--workers", "-w", type=int, default=2, help="Provide number of workers"
