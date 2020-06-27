@@ -16,6 +16,7 @@ log_config.fileConfig(r"./log.conf")
 logger = logging.getLogger(__name__)
 
 base_folder = Path("../data/processed")
+mlflow.tracking.set_tracking_uri("http://localhost:5000")
 
 
 def train_model(experiment_name: Optional[str]) -> None:

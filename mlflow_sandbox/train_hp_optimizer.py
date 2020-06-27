@@ -14,8 +14,8 @@ from sklearn.svm import SVC
 
 
 from helpers.cli_options import get_cli_options_multiple
-from helpers.mlflow_helpers import create_experiment, combine_spaces
-from helpers.pipeline import Anonymizer, explore_search_space
+from helpers.mlflow_helpers import create_experiment
+from helpers.pipeline import Anonymizer, combine_spaces, explore_search_space
 from helpers.preprocessing import load_data
 
 
@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 METRIC_SCORE = "f1"
 base_folder = Path("../data/processed")
+mlflow.tracking.set_tracking_uri("http://localhost:5000")
 
 
 def train_model(
@@ -130,5 +131,5 @@ if __name__ == "__main__":
 
     logger.info(
         "Results are stored in experiment %s. Run 'python train_best_model.py'",
-        experiment,
+        experiment.name,
     )
