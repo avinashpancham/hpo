@@ -14,7 +14,7 @@ from sklearn.svm import SVC
 
 
 from helpers.cli_options import get_cli_options
-from helpers.mlflow_helpers import get_experiment_id, get_group_id, combine_spaces
+from helpers.mlflow_helpers import get_experiment, combine_spaces
 from helpers.pipeline import Anonymizer, explore_search_space
 from helpers.preprocessing import load_data
 
@@ -25,10 +25,14 @@ logger = logging.getLogger(__name__)
 
 METRIC_SCORE = "f1"
 base_folder = Path("../data/processed")
-experiment_id = get_experiment_id("NLP_sentiment")
 
 
-def train_model(sample_size: int, workers: int, random_optimizer: bool) -> None:
+def train_model(
+    sample_size: int,
+    workers: int,
+    random_optimizer: bool,
+    experiment: mlflow.entities.experiment.Experiment,
+) -> None:
     logger.info("Load IMDB reviews")
     df_train, _ = load_data(folder=base_folder, sample_size=sample_size)
 
@@ -64,7 +68,7 @@ def train_model(sample_size: int, workers: int, random_optimizer: bool) -> None:
 
     # Explore search space
     logger.info("Explore search space")
-    models = explore_search_space(
+    optimizer = explore_search_space(
         X=anonymized_reviews,
         y=df_train.sentiment,
         random_optimizer=random_optimizer,
@@ -74,21 +78,20 @@ def train_model(sample_size: int, workers: int, random_optimizer: bool) -> None:
         refit=METRIC_SCORE,
         workers=workers,
     )
+    models = optimizer.cv_results_
 
     # MLflow logging of results
-    logger.info("Write results to MLflow")
-    group_id = get_group_id()
-    for ind, (model, acc, precision, f1) in enumerate(
+    logger.info("Write results to MLflow experiment: %s", experiment.name)
+    for ind, (model, acc, precision, f1, rank) in enumerate(
         zip(
             models["params"],
             models["mean_test_accuracy"],
             models["mean_test_average_precision"],
             models["mean_test_f1"],
+            models["rank_test_f1"],
         )
     ):
-        with mlflow.start_run(
-            experiment_id=experiment_id, run_name=f"{group_id}_{ind}"
-        ):
+        with mlflow.start_run(experiment_id=experiment.experiment_id):
             mlflow.log_params(
                 {
                     "N": sample_size,
@@ -105,13 +108,22 @@ def train_model(sample_size: int, workers: int, random_optimizer: bool) -> None:
                 }
             )
             mlflow.log_metrics({"accuracy": acc, "precision": precision, "f1": f1})
-            mlflow.log_artifact(
-                base_folder / "train.csv", "train.csv",
-            )
+
+            if rank == 1:
+                mlflow.set_tag("saved_model", True)
+                mlflow.sklearn.log_model(optimizer.best_estimator_, "model")
+                mlflow.log_artifact(
+                    base_folder / "train.csv", "train.csv",
+                )
 
 
 if __name__ == "__main__":
     sample_size, workers, random_optimizer = get_cli_options()
+
+    experiment = get_experiment(base_name="Sentiment")
     train_model(
-        sample_size=sample_size, workers=workers, random_optimizer=random_optimizer
+        sample_size=sample_size,
+        workers=workers,
+        random_optimizer=random_optimizer,
+        experiment=experiment,
     )

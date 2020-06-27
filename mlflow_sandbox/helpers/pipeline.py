@@ -66,6 +66,4 @@ def explore_search_space(
         )
 
     # Train models
-    optimizer.fit(X, y)
-
-    return optimizer.cv_results_
+    return optimizer.fit(X, y)
