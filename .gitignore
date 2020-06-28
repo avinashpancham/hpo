@@ -141,3 +141,5 @@ cython_debug/
 .DS_Store
 .idea/
 .envrc
+data/database/*
+data/artifacts/*
