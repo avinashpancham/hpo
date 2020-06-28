@@ -5,12 +5,13 @@ from pathlib import Path
 from typing import Optional
 
 import mlflow
+import mlflow.sklearn
 import spacy
 from sklearn.metrics import accuracy_score, average_precision_score, f1_score
 from sklearn.base import BaseEstimator, TransformerMixin
 
 from helpers.cli_options import get_cli_options_single
-from helpers.mlflow_helpers import get_experiment_id, get_best_model
+from helpers.mlflow_helpers import get_experiment, get_best_model
 from helpers.preprocessing import load_data
 
 
@@ -48,11 +49,11 @@ class Anonymizer(BaseEstimator, TransformerMixin):
 
 def train_model(experiment_name: Optional[str]) -> None:
     logger.info("Load IMDB reviews")
-    df_train, df_test = load_data(folder=base_folder, sample_size=None)
+    df_train, df_test = load_data(folder=base_folder, sample_size=10)
 
     logger.info("Load best model from MLflow")
-    experiment_id = get_experiment_id(experiment_name=experiment_name)
-    run_id, pipeline = get_best_model(experiment_id=experiment_id)
+    experiment = get_experiment(experiment_name=experiment_name)
+    run_id, pipeline = get_best_model(experiment_id=experiment.experiment_id)
 
     logger.info("Construct new pipeline")
     anonymizer = Anonymizer()
@@ -72,7 +73,7 @@ def train_model(experiment_name: Optional[str]) -> None:
     logger.info("Precision: %s", precision)
     logger.info("F1: %s", f1)
 
-    with mlflow.start_run(experiment_id=experiment_id, run_id=run_id):
+    with mlflow.start_run(experiment_id=experiment.experiment_id, run_id=run_id):
         mlflow.log_metrics(
             {
                 "test_accuracy": accuracy,
@@ -80,7 +81,9 @@ def train_model(experiment_name: Optional[str]) -> None:
                 "test_f1_score": f1,
             }
         )
-        mlflow.sklearn.log_model(pipeline, "trained_model")
+        mlflow.sklearn.save_model(
+            pipeline, f"../trained_model/{experiment.name.lower()}"
+        )
         mlflow.log_artifact(base_folder / "test.csv", "data")
 
 
