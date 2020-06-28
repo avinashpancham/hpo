@@ -13,26 +13,29 @@ def create_experiment(base_name: str) -> mlflow.entities.experiment.Experiment:
     return mlflow.get_experiment(experiment_id=experiment_id)
 
 
-def get_experiment_id(experiment_name: Optional[str]) -> str:
+def get_experiment(
+    experiment_name: Optional[str],
+) -> mlflow.entities.experiment.Experiment:
 
     client = MlflowClient()
     experiments = client.list_experiments()
 
     # Return most recent experiment if the user did not provide an experiment
     if not experiment_name:
-        return str(max(int(experiment.experiment_id) for experiment in experiments))
+        return max(
+            [experiment for experiment in experiments],
+            key=lambda exp: int(exp.experiment_id),
+        )
 
     # Return the experiment provided by the user if it exists
-    experiment_id = [
-        experiment.experiment_id
-        for experiment in experiments
-        if experiment.name == experiment_name
+    experiment = [
+        experiment for experiment in experiments if experiment.name == experiment_name
     ]
 
-    if not experiment_id:
+    if not experiment:
         raise ValueError(f"Experiment {experiment_name} does not exist")
 
-    return experiment_id[0]
+    return experiment[0]
 
 
 def get_best_model(experiment_id: str) -> Tuple[str, Pipeline]:
