@@ -20,7 +20,7 @@ def get_experiment_id(experiment_name: Optional[str]) -> str:
 
     # Return most recent experiment if the user did not provide an experiment
     if not experiment_name:
-        return max(experiment.experiment_id for experiment in experiments)
+        return str(max(int(experiment.experiment_id) for experiment in experiments))
 
     # Return the experiment provided by the user if it exists
     experiment_id = [
