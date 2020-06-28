@@ -5,6 +5,9 @@ from logging import config as log_config
 import mlflow
 import mlflow.sklearn
 import numpy as np
+import pandas as pd
+import spacy
+from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -15,7 +18,7 @@ from sklearn.svm import SVC
 
 from helpers.cli_options import get_cli_options_multiple
 from helpers.mlflow_helpers import create_experiment
-from helpers.pipeline import Anonymizer, combine_spaces, explore_search_space
+from helpers.pipeline import combine_spaces, explore_search_space
 from helpers.preprocessing import load_data
 
 
@@ -26,6 +29,31 @@ logger = logging.getLogger(__name__)
 METRIC_SCORE = "f1"
 base_folder = Path("../data/processed")
 mlflow.tracking.set_tracking_uri("http://localhost:5000")
+
+
+# Defining class here (again) because pickling model will give issues
+# if the custom transformer is saved in another file
+class Anonymizer(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self._nlp_model = spacy.load("en_core_web_sm")
+
+    # Return self nothing else to do here
+    def fit(self, X, y=None, **fit_params):
+        return self
+
+    def transform(self, X, **transform_params):
+        def _anonymize(doc: spacy.tokens.doc.Doc) -> str:
+            text = doc.text
+            for ent in doc.ents:
+                text = text.replace(ent.text, ent.label_)
+            return text
+
+        return pd.Series(
+            [
+                _anonymize(doc)
+                for doc in self._nlp_model.pipe(X, disable=["tagger", "parser"])
+            ]
+        )
 
 
 def train_model(
