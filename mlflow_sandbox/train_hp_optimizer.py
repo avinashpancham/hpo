@@ -38,7 +38,7 @@ def train_model(
     df_train, _ = load_data(folder=base_folder, sample_size=sample_size)
 
     # Anonymize data before pipeline, since this step is slow and constant
-    logger.info("Preprocess reviews with spaCy")
+    logger.info("Preprocess reviews with spaCy. This may take a while..")
     anonymized_reviews = Anonymizer().transform(df_train.review)
 
     # Define pipeline structure
@@ -130,6 +130,6 @@ if __name__ == "__main__":
     )
 
     logger.info(
-        "Results are stored in experiment %s. Run 'python train_best_model.py'",
+        "Train best model by running 'python train_best_model.py -n %s'",
         experiment.name,
     )

@@ -3,7 +3,7 @@ import re
 import tarfile
 from logging import config as log_config
 from pathlib import PosixPath
-from typing import Tuple
+from typing import Tuple, Optional
 
 import pandas as pd
 import html2text
@@ -72,8 +72,15 @@ def store_datasets(df: pd.DataFrame, folder: PosixPath) -> pd.DataFrame:
     return df
 
 
-def load_data(folder: PosixPath, sample_size: int) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    return (
-        pd.read_csv(folder / "train.csv", sep="|").sample(sample_size, random_state=0),
-        pd.read_csv(folder / "test.csv", sep="|").sample(sample_size, random_state=0),
-    )
+def load_data(
+    folder: PosixPath, sample_size: Optional[int] = None
+) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    df_train = pd.read_csv(folder / "train.csv", sep="|")
+    df_test = pd.read_csv(folder / "test.csv", sep="|")
+
+    if sample_size:
+        return (
+            df_train.sample(sample_size, random_state=0),
+            df_test.sample(sample_size, random_state=0),
+        )
+    return df_train, df_test
