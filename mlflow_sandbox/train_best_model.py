@@ -21,7 +21,7 @@ mlflow.tracking.set_tracking_uri("http://localhost:5000")
 
 def train_model(experiment_name: Optional[str]) -> None:
     logger.info("Load IMDB reviews")
-    df_train, df_test = load_data(folder=base_folder, sample_size=10)
+    df_train, df_test = load_data(folder=base_folder, sample_size=None)
 
     logger.info("Load best model from MLflow")
     experiment_id = get_experiment_id(experiment_name=experiment_name)
