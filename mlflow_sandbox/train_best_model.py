@@ -52,8 +52,6 @@ def train_model(experiment_name: Optional[str]) -> None:
 
     logger.info("Load best model from MLflow")
     experiment_id = get_experiment_id(experiment_name=experiment_name)
-    logging.info(experiment_id)
-    return
     run_id, pipeline = get_best_model(experiment_id=experiment_id)
 
     logger.info("Construct new pipeline")
