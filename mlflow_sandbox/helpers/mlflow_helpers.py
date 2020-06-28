@@ -8,7 +8,7 @@ from sklearn.pipeline import Pipeline
 
 
 def create_experiment(base_name: str) -> mlflow.entities.experiment.Experiment:
-    uid = datetime.utcnow().strftime("%Y%m%d_%H%M")
+    uid = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
     experiment_id = mlflow.create_experiment(name=f"{base_name}_{uid}")
     return mlflow.get_experiment(experiment_id=experiment_id)
 

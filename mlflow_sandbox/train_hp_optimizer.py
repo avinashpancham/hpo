@@ -114,7 +114,7 @@ def train_model(
                 mlflow.set_tag("best_model", True)
                 mlflow.sklearn.log_model(optimizer.best_estimator_, "model")
                 mlflow.log_artifact(
-                    base_folder / "train.csv", "train.csv",
+                    base_folder / "train.csv", "data",
                 )
 
 
