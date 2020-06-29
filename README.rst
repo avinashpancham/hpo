@@ -62,6 +62,8 @@ Train models
 
 1. Run MLflow server via the code shown below. This Makefile command starts up the Postgres database and the MLflow server.
 The MLflow server is accessible via *localhost:5000*.
+With the current configuration the statistics are stored in the Postgres database, whereas the artifacts are stored on your disk.
+For production I would recommend using a SQL instance in the Cloud for the statistics and blob storage for the artifacts.
 
 .. code-block:: bash
 
