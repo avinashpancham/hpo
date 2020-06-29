@@ -19,6 +19,7 @@ Dependencies
 This project has the following dependencies:
 
 - Dependencies
+    - `Large Movie Review Dataset <http://ai.stanford.edu/~amaas/data/sentiment/>`_ from Stanford (already included in the repo)
     - `Git LFS <https://git-lfs.github.com/>`_
     - Python >= 3.7
     - `Docker <https://www.docker.com/>`_
