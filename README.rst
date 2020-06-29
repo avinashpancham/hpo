@@ -80,6 +80,6 @@ visible in the corresponding experiment in the MLFlow dashboard
 
    $ python train_best_model.py
 
-4. The best model is stored in the directory :code:`trained_model`in the subdirectory with the corresponding experiment name.
+4. The best model is stored in the directory :code:`trained_model` in the subdirectory with the corresponding experiment name.
 The :code:`model.pkl` is your trained ML model that can be utilized to make predictions!
 
