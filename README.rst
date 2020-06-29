@@ -4,9 +4,9 @@ MLflow Sandbox
 Train a ML model in Scikit-learn for sentiment classification, while keeping track of the performance of the different models via MLflow.
 The optimal model is found by exploring the model search space through GridSearch (Bayesian optimization is on the TODO list..).
 
-The searchspace has two dimensions:
+The search space has two dimensions:
 
-- Different vectorizer settings: ngram size
+- Different vectorizer settings: ngram sizes
 - Different classifiers and classifier settings: Naive Bayes, Random Forest and Support Vector Machines.
 
 
@@ -59,7 +59,7 @@ Not using poetry:
 Train models
 ============
 
-1. Run MLflow server via the code shown below. This Makefile command starts up the Postgres DB and the MLflow server.
+1. Run MLflow server via the code shown below. This Makefile command starts up the Postgres database and the MLflow server.
 The MLflow server is accessible via *localhost:5000*.
 
 .. code-block:: bash
@@ -80,6 +80,6 @@ visible in the corresponding experiment in the MLFlow dashboard
 
    $ python train_best_model.py
 
-4. The best model is stored in the folder `trained_model` in the folder with the corresponding experiment name.
-The model.pkl is your trained ML model that can be utilized to make predictions!
+4. The best model is stored in the directory :code:`trained_model`in the subdirectory with the corresponding experiment name.
+The :code:`model.pkl` is your trained ML model that can be utilized to make predictions!
 
