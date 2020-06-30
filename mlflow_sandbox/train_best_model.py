@@ -49,7 +49,7 @@ class Anonymizer(BaseEstimator, TransformerMixin):
 
 def train_model(experiment_name: Optional[str]) -> None:
     logger.info("Load IMDB reviews")
-    df_train, df_test = load_data(folder=base_folder, sample_size=10)
+    df_train, df_test = load_data(folder=base_folder, sample_size=None)
 
     logger.info("Load best model from MLflow")
     experiment = get_experiment(experiment_name=experiment_name)
