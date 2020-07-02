@@ -19,7 +19,7 @@ log_config.fileConfig(r"./log.conf")
 logger = logging.getLogger(__name__)
 
 
-def define_hyperparameters():
+def define_hyperparameters() -> (Pipeline, List[Dict[str, Any]]):
     # Define pipeline structure
     logger.info("Set up pipeline")
     vectorizer = TfidfVectorizer(stop_words="english", min_df=2)

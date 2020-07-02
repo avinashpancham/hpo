@@ -4,6 +4,8 @@ from typing import Optional, Tuple, Union
 import mlflow
 import mlflow.sklearn
 from mlflow.tracking import MlflowClient
+from optuna.study import Study
+from optuna.trial import Trial
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 
@@ -96,7 +98,7 @@ def mlflow_sklearn_logging(
                 )
 
 
-def mlflow_optuna_logging(study, trial):
+def mlflow_optuna_logging(study: Study, trial: Trial) -> None:
     experiment = study.user_attrs["experiment"]
     with mlflow.start_run(experiment_id=experiment.experiment_id):
         mlflow.log_params({"N": study.user_attrs["sample_size"], **trial.params})
