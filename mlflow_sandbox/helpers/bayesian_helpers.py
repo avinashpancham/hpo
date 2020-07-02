@@ -3,6 +3,8 @@ from logging import config as log_config
 from typing import Tuple
 
 import pandas as pd
+from optuna.study import Study
+from optuna.trial import Trial
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import cross_validate
@@ -14,7 +16,7 @@ log_config.fileConfig(r"./log.conf")
 logger = logging.getLogger(__name__)
 
 
-def define_hyperparameters(trial):
+def define_hyperparameters(trial: Trial) -> Pipeline:
     ngram_range = trial.suggest_categorical("vectorizer__ngram_range", ["11", "12"])
     vectorizer = TfidfVectorizer(
         stop_words="english", min_df=2, ngram_range=string_to_tuple(ngram_range),
@@ -40,7 +42,7 @@ def string_to_tuple(s: str) -> Tuple[int, int]:
     return int(s[0]), int(s[-1])
 
 
-def terminal_logging(study, trial):
+def terminal_logging(study: Study, trial: Trial) -> None:
     trial_value = trial.value if trial.value is not None else float("nan")
     logger.info(
         "Trial number: %s, %s",
@@ -50,7 +52,7 @@ def terminal_logging(study, trial):
     logger.info("Accuracy: %s", trial_value)
 
 
-def objective(trial, X: pd.Series, y: pd.Series, workers: int) -> int:
+def objective(trial: Trial, X: pd.Series, y: pd.Series, workers: int) -> int:
     # Get architecture and its parameters
     pipeline = define_hyperparameters(trial=trial)
 
