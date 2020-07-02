@@ -35,7 +35,7 @@ def train_model(
 
     logger.info("Explore search space")
     study = optuna.create_study(direction="maximize")
-    study.set_user_attr(key="N", value=sample_size)
+    study.set_user_attr(key="sample_size", value=sample_size)
     study.set_user_attr(key="experiment", value=experiment)
     study.set_user_attr(key="data", value=base_folder / "train.csv")
 
