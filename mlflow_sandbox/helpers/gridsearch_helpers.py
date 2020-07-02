@@ -2,7 +2,7 @@ import logging
 from collections import ChainMap
 from itertools import product
 from logging import config as log_config
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import pandas as pd
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 def define_hyperparameters():
     # Define pipeline structure
     logger.info("Set up pipeline")
-    vectorizer = TfidfVectorizer(stop_words="english", min_df=2,)
+    vectorizer = TfidfVectorizer(stop_words="english", min_df=2)
     pipeline = Pipeline(
         [
             ("vectorizer", vectorizer),
@@ -57,7 +57,7 @@ def explore_search_space(
     workers: int,
     cv: int = 3,
     verbose: int = 2,
-) -> Dict[str, Any]:
+) -> Union[GridSearchCV, RandomizedSearchCV]:
     if not random_optimizer:
         optimizer = GridSearchCV(
             estimator=pipeline,
@@ -85,7 +85,9 @@ def explore_search_space(
     return optimizer.fit(X, y)
 
 
-def optimize(X: pd.Series, y: pd.Series, workers: int, random_optimizer: bool):
+def optimize(
+    X: pd.Series, y: pd.Series, workers: int, random_optimizer: bool
+) -> Union[GridSearchCV, RandomizedSearchCV]:
     # Get architecture and its hyperparameters
     pipeline, space = define_hyperparameters()
 

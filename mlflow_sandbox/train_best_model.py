@@ -60,7 +60,7 @@ def train_model(experiment_name: Optional[str]) -> None:
     pipeline.steps.insert(0, ("anonymizer", anonymizer))
     pipeline.verbose = True
 
-    # Share architecture
+    # Share best architecture
     print(pipeline)
 
     logger.info("Train model on complete dataset")
