@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Optional, Tuple, Any, Dict
+from typing import Optional, Tuple, Union
 
 import mlflow
 import mlflow.sklearn
 from mlflow.tracking import MlflowClient
+from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 from sklearn.pipeline import Pipeline
 
 
@@ -51,9 +52,11 @@ def get_best_model(experiment_id: str) -> Tuple[str, Pipeline]:
 
 
 def mlflow_sklearn_logging(
-    optimizer: Dict[str, Any], experiment_id: str, sample_size: int, data: str
+    optimizer: Union[GridSearchCV, RandomizedSearchCV],
+    experiment_id: str,
+    sample_size: int,
+    data: str,
 ) -> None:
-    # TODO: change optimier type hinting
     models = optimizer.cv_results_
 
     for ind, (model, acc, precision, f1, rank) in enumerate(
