@@ -18,7 +18,7 @@ def get_cli_options_hpo(
             "--trials",
             "--t",
             type=int,
-            default=10,
+            default=20,
             help="Number of trails for Bayesian optimization",
         )
 
