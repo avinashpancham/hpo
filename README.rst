@@ -29,11 +29,17 @@ This project has the following dependencies:
 Setup
 =====
 
-1. Clone the repo
+1. Install Git LFS on your machine
 
-2. Create a virtual environment with at least Python 3.7 via the tool of your choice (conda, venv, etc.)
+.. code-block:: bash
 
-3. Install the Python dependencies
+   $ git lfs install --system --skip-repo
+
+2. Clone the repo
+
+3. Create a virtual environment with at least Python 3.7 via the tool of your choice (conda, venv, etc.)
+
+4. Install the Python dependencies
 
 Using poetry:
 
@@ -48,7 +54,7 @@ Not using poetry:
    $ pip install -r requirements.txt
 
 
-4. Create the directories :code:`database` and :code:`artifact` in the :code:`data` directory
+5. Create the directories :code:`database` and :code:`artifact` in the :code:`data` directory
 
 .. code-block:: bash
 
