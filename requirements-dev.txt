@@ -1,0 +1,5 @@
+-r requirements.txt
+
+pytest==5.2
+jupyter==1.0.0
+pre-commit==2.5.1
