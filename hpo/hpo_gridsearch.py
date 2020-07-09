@@ -1,6 +1,6 @@
-from pathlib import Path
 import logging
 from logging import config as log_config
+from pathlib import Path
 
 import mlflow
 
@@ -63,6 +63,5 @@ if __name__ == "__main__":
     )
 
     logger.info(
-        "Train best model by running 'python train.py -n %s'",
-        experiment.name,
+        "Train best model by running 'python train.py -n %s'", experiment.name,
     )
