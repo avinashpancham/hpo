@@ -7,7 +7,7 @@ def get_cli_options_hpo(
 ) -> Union[Tuple[int, int, int], Tuple[int, int, bool]]:
     parser = argparse.ArgumentParser(description="Provide input for training models")
     parser.add_argument(
-        "--size", "-n", type=int, default=10000, help="Provide sample size"
+        "--size", "-s", type=int, default=10000, help="Provide sample size"
     )
     parser.add_argument(
         "--workers", "-w", type=int, default=2, help="Provide number of workers"
@@ -16,7 +16,7 @@ def get_cli_options_hpo(
     if bayesian:
         parser.add_argument(
             "--trials",
-            "--t",
+            "-t",
             type=int,
             default=20,
             help="Number of trails for Bayesian optimization",
