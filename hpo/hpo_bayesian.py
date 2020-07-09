@@ -58,6 +58,6 @@ if __name__ == "__main__":
     )
 
     logger.info(
-        "Train best model by running 'python train_best_model.py -n %s'",
+        "Train best model by running 'python train.py -n %s'",
         experiment.name,
     )

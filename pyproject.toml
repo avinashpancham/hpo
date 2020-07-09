@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mlflow-sandbox"
+name = "hpo"
 version = "0.1.0"
 description = ""
 authors = ["Avinash Pancham <avinashpancham@outlook.com>"]
