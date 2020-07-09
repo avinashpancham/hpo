@@ -12,9 +12,9 @@ Hyperparameter optimization (hpo) can luckily also be done using Python. In this
 - Smart way using bayesian optimization with *Optuna*
 
 As use case a binary sentiment classification task (positive vs negative) is chosen.
-The ML model architecture is built via Scikit learn and consist of a Scikit learn pipeline with an Anonymizer (custom transformer),
+The ML model architecture is built via Scikit Learn and consist of a Scikit Learn pipeline with an Anonymizer (custom transformer),
 TFIDF vectorizer and a classifier.
-The performance of each models is tracked using MLflow. The hyperparameter searchspace in this situation has two dimensions:
+The performance of each model is tracked using MLflow. The hyperparameter searchspace in this situation has two dimensions:
 
 - Different vectorizer settings: ngram ranges
 - Different classifiers and classifier settings: Naive Bayes, Random Forest and Support Vector Machines.
