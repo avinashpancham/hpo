@@ -1,4 +1,4 @@
-from mlflow_sandbox import __version__
+from hpo import __version__
 
 
 def test_version():
