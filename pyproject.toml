@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mlflow-sandbox"
+name = "hpo"
 version = "0.1.0"
 description = ""
 authors = ["Avinash Pancham <avinashpancham@outlook.com>"]
@@ -14,6 +14,7 @@ en-core-web-sm = {url = "https://github.com/explosion/spacy-models/releases/down
 html2text = "^2020.1.16"
 psycopg2-binary = "^2.8.5"
 scikit-learn = "^0.23.1"
+optuna = "^1.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
