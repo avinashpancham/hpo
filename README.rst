@@ -135,7 +135,7 @@ The following arguments can be provided:
 
 
 4. After the run is finished the parameters and metrics (performance) of each model is
-visible in the corresponding experiment in the MLFlow dashboard
+visible in the corresponding experiment in the MLflow dashboard
 
 
 5. Train the best model on the complete dataset and evaluate performance on the test dataset
