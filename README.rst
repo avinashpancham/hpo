@@ -9,7 +9,7 @@ This gives us an optimal model, but we do not know what the architecure and the 
 Hyperparameter optimization (hpo) can luckily also be done using Python. In this repository it is demonstrated how to perform hpo in the:
 
 - Naive way using gridsearch with Scikit-Learn's GridSearchCV
-- Smart way using bayesian optimization with *Optuna*
+- Smart way using bayesian optimization with Optuna
 
 As use case a binary sentiment classification task (positive vs negative) is chosen.
 The ML model architecture is built via Scikit Learn and consist of a Scikit Learn pipeline with an Anonymizer (custom transformer),
@@ -50,7 +50,7 @@ Setup
 
    $ sudo git lfs install --system --skip-repo
 
-3. Clone the repo. If you have already cloned the repo before installing Git LFS, run the following to get all the *large files* (else only the pointers to the large files will be downloaded):
+3. Clone the repo. If you have already cloned the repo before installing Git LFS, run the following to get all the *large files* (else only the pointers to the large files will be present on your machine):
 
 .. code-block:: bash
 
