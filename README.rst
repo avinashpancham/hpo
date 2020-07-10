@@ -4,7 +4,7 @@ Hyperparameter optimization
 The right hyperparameters can make all the difference for the performance of your ML model,
 but finding the optimal set of hyperparameters is often a slow process.
 AutoML solutions have been made to assist in the search for the optimal set of hyperparameters, see for example `Cloud AutoML <https://cloud.google.com/automl?hl=nl>`_
-This gives us an optimal model, but we do not know what the architecure and the corresponding optimal set of hyperparameter are.
+This gives us an optimal model, but we do not know what the architecure and the corresponding optimal set of hyperparameters are.
 
 Hyperparameter optimization (hpo) can luckily also be done using Python. In this repository it is demonstrated how to perform hpo in the:
 
