@@ -4,6 +4,5 @@ spacy==2.3.0
 tqdm==4.46.1
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.3.0/en_core_web_sm-2.3.0.tar.gz
 html2text==2020.1.16
-psycopg2-binary==2.8.5
 scikit-learn==0.23.1
 optuna==1.5.0
