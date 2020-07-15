@@ -85,12 +85,12 @@ Not using poetry:
 Explore hyperparameter space
 ============================
 
-1. Start a MLflow server via the code shown below. This :code:`Makefile` command starts up the Postgres database and the MLflow UI.
+1. Start the MLflow application by running the docker-compose file. This will run the MLflow server and a Postgresql database.
 The MLflow server is accessible at *localhost:5000*.
 
 .. code-block:: bash
 
-   $ make mlflow-server
+   $ docker-compose up --build
 
 With the current configuration the statistics are stored in the Postgres database, whereas the artifacts are stored on your disk.
 
