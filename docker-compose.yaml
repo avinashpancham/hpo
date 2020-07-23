@@ -22,3 +22,4 @@ services:
       - "5000:5000"
     volumes:
       - "./data/artifacts:/data/artifacts"
+      - "./data/trained_models:/data/trained_models"

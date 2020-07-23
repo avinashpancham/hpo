@@ -85,7 +85,7 @@ def train_model(experiment_name: Optional[str]) -> None:
             }
         )
         mlflow.sklearn.save_model(
-            pipeline, f"../trained_model/{experiment.name.lower()}"
+            pipeline, f"../data/trained_models/{experiment.name.lower()}"
         )
         mlflow.log_artifact(base_folder / "test.csv", "data")
 

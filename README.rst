@@ -73,13 +73,12 @@ Not using poetry:
    $ pip install -r requirements.txt
 
 
-5. Create the directories :code:`database` and :code:`artifacts` in the :code:`data` directory
+5. Create the directories :code:`database`, :code:`artifacts` and :code:`trained_models` in the :code:`data` directory
 
 .. code-block:: bash
 
    $ cd data
-   $ mkdir database
-   $ mkdir artifacts
+   $ mkdir database artifacts trained_models
 
 ============================
 Explore hyperparameter space
@@ -144,6 +143,6 @@ visible in the corresponding experiment in the MLflow dashboard
 
    $ python train.py
 
-6. The best model is stored in the directory :code:`trained_model` in the subdirectory with the corresponding experiment name.
+6. The best model is stored in the directory :code:`data/trained_models` in the subdirectory with the corresponding experiment name.
 The :code:`model.pkl` is your trained ML model that can be utilized to make predictions!
 
